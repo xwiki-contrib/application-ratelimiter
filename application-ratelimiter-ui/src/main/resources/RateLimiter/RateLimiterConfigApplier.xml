@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="RateLimiter.RateLimiterConfigApplier" locale="">
+  <web>RateLimiter</web>
+  <name>RateLimiterConfigApplier</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>RateLimiter.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1479726099000</creationDate>
+  <date>1479807699000</date>
+  <contentUpdateDate>1479726099000</contentUpdateDate>
+  <version>1.1</version>
+  <title>RateLimiterConfigApplier</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <object>
+    <class>
+      <name>XWiki.ComponentClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <roleHint>
+        <disabled>0</disabled>
+        <name>roleHint</name>
+        <number>2</number>
+        <prettyName>Component Role Hint</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </roleHint>
+      <roleType>
+        <disabled>0</disabled>
+        <name>roleType</name>
+        <number>1</number>
+        <prettyName>Component Role Type</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </roleType>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>3</number>
+        <prettyName>Component Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>wiki=Current Wiki|user=Current User|global=Global</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+    <name>RateLimiter.RateLimiterConfigApplier</name>
+    <number>0</number>
+    <className>XWiki.ComponentClass</className>
+    <guid>d4ec95c6-bb22-4fda-a152-7b982a685d2d</guid>
+    <property>
+      <roleHint>RateLimiterConfigApplier</roleHint>
+    </property>
+    <property>
+      <roleType>org.xwiki.observation.EventListener</roleType>
+    </property>
+    <property>
+      <scope>global</scope>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.ComponentInterfaceClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Interface Qualified Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>RateLimiter.RateLimiterConfigApplier</name>
+    <number>0</number>
+    <className>XWiki.ComponentInterfaceClass</className>
+    <guid>8393edb8-ba6e-4509-af6e-c027bad3242f</guid>
+    <property>
+      <name>org.xwiki.component.phase.Initializable</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.ComponentMethodClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <code>
+        <contenttype/>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Method body code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Method name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>RateLimiter.RateLimiterConfigApplier</name>
+    <number>0</number>
+    <className>XWiki.ComponentMethodClass</className>
+    <guid>bc22f6d3-a815-4ddc-b48a-d530a21cd26b</guid>
+    <property>
+      <code>{{groovy}}
+import org.xwiki.bridge.event.DocumentUpdatedEvent;
+import org.xwiki.model.reference.DocumentReference;
+
+xcontext.method.output.value = [new DocumentUpdatedEvent(new DocumentReference('xwiki','RateLimiter','Config'))]
+{{/groovy}}</code>
+    </property>
+    <property>
+      <name>getEvents</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.ComponentMethodClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <code>
+        <contenttype/>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Method body code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Method name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>RateLimiter.RateLimiterConfigApplier</name>
+    <number>1</number>
+    <className>XWiki.ComponentMethodClass</className>
+    <guid>c8e4943f-0a36-4ebe-9c36-717ef4d72978</guid>
+    <property>
+      <code>{{groovy}}
+try {
+  xcontext.method.component.initialize();
+} catch (Throwable t) {
+  t.printStackTrace();
+}
+{{/groovy}}</code>
+    </property>
+    <property>
+      <name>onEvent</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.ComponentMethodClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <code>
+        <contenttype/>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Method body code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Method name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>RateLimiter.RateLimiterConfigApplier</name>
+    <number>2</number>
+    <className>XWiki.ComponentMethodClass</className>
+    <guid>1d5c3a7e-d0ce-4f39-b06a-06172de265e7</guid>
+    <property>
+      <code>{{groovy}}
+xcontext.method.output.value = "RateLimiterConfigApplier"
+{{/groovy}}</code>
+    </property>
+    <property>
+      <name>getName</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.ComponentMethodClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <code>
+        <contenttype/>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Method body code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Method name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>RateLimiter.RateLimiterConfigApplier</name>
+    <number>3</number>
+    <className>XWiki.ComponentMethodClass</className>
+    <guid>078b3e89-63c4-45d0-8e37-2c448307614f</guid>
+    <property>
+      <code>{{groovy}}
+import java.util.concurrent.TimeUnit;
+import org.xwiki.model.reference.DocumentReference;
+
+def logger = services.logging.getLogger('RateLimiter.RateLimiterConfigApplier');
+logger.debug("Rate Limiter - Starting configuration update");
+
+try {
+    def builder = services.ratelimiter.builder;
+    xwiki.getDocument(new DocumentReference('xwiki','RateLimiter','Config')).getObjects('RateLimiter.RateLimiterConfigClass').each {
+        long limit = 0;
+        long period = 0;
+        TimeUnit unit = null;
+        long overflow = 0;
+
+        // Retrive a single rate limiter configuration
+        try {
+            limit = it.getValue('limit')?.longValue();
+            period = it.getValue('period')?.longValue();
+            unit = TimeUnit.valueOf(it.getValue('unit'));
+            overflow = it.getValue('overflow')?.longValue() ?: 0;
+        } catch (Exception e) {
+            //ignored
+        }
+        if (limit &lt; 1 || period &lt; 1 || !unit) return;
+
+        // Build the corresponding limiter
+        if (overflow &lt; limit) {
+            builder.addLimiter(limit, period, unit);
+            logger.debug("New infinite bucket rate limiter added ($limit, $period, $unit)");
+        } else {
+            builder.addLimiter(limit, overflow, period, unit);
+            logger.debug("New infinite bucket rate limiter added ($limit, $overflow, $period, $unit)");
+        }
+    }
+
+    logger.debug("Applying the new rate limiter configuration");
+    services.ratelimiter.setActionRateLimiter(builder.build());
+} catch (Throwable t) {
+  logger.debug("Fatal error during rate limiter configuration application", e);
+}
+logger.debug("Rate Limiter - Configuration updated");
+{{/groovy}}</code>
+    </property>
+    <property>
+      <name>initialize</name>
+    </property>
+  </object>
+  <content/>
+</xwikidoc>

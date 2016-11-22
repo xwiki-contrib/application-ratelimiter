@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="RateLimiter.Translations" locale="fr">
+  <web>RateLimiter</web>
+  <name>Translations</name>
+  <language>fr</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>RateLimiter.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1479720861000</creationDate>
+  <date>1479810072000</date>
+  <contentUpdateDate>1479810072000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>ratelimiter.config.intro=Le service de limitation de débit offre un moyen de contrôler la rapidité avec laquelle les utilisateurs peuvent consommer le contenu de votre site Web et empêcher les aspirations abusives. Grâce à cette configuration, vous pouvez définir un ou plusieurs taux de consommation autorisés pour différentes périodes. Toutes les modifications sont appliquées immédiatement pour les nouveaux visiteurs, tandis que les visiteurs existants poursuivent leur configuration précédente jusqu'à leur prochaine visite ou le redémarrage de l'application. Si vous supprimez toutes les limitations, le service est immédiatement désactivé pour tous les utilisateurs. Les administrateurs ne sont pas affectés par ces limitations et les visiteurs anonymes sont limité par leur adresse IP.
+ratelimiter.config.ratelimiters=Limiteurs de débit configurés
+ratelimiter.config.livetable.limit=Limite
+ratelimiter.config.livetable.period=Periode
+ratelimiter.config.livetable.overflow=Dépassement
+ratelimiter.config.livetable.actions=
+ratelimiter.config.error.norights=Vous devez disposer des droits d'administrateur pour gérer cette configuration.
+ratelimiter.config.livetable.limit.requestper=requêtes&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;/
+ratelimiter.config.livetable.overflow.never=Jamais
+ratelimiter.config.livetable.overflow.requests=requêtes
+
+RateLimiter.RateLimiterConfigClass_unit_DAYS=jour(s)
+RateLimiter.RateLimiterConfigClass_unit_HOURS=heure(s)
+RateLimiter.RateLimiterConfigClass_unit_MINUTES=minute(s)
+
+RateLimiter.RateLimiterConfigClass_limit=Limite
+RateLimiter.RateLimiterConfigClass_limit_tooltip=Nombre maximum de requêtes autorisées pendant la période. Les requêtes ne sont pas strictement équivalentes aux pages. Le chargement d'une page nécessite au moins une requête, mais pourrait générer plus de requêtes pour charger des images dans la page, afficher des pièces jointes, etc.
+RateLimiter.RateLimiterConfigClass_period=Période
+RateLimiter.RateLimiterConfigClass_period_tooltip=La période glissante prise en compte pour appliquer la limite ci-dessus. La limitation effective consiste à ne pas dépasser &lt;limite&gt; requêtes par &lt;période&gt;.
+RateLimiter.RateLimiterConfigClass_overflow=Dépassement
+RateLimiter.RateLimiterConfigClass_overflow_tooltip=Nombre de requêtes prise en considération pour la limitation du débit. Toute requête faite en excès de ce dépassement sera simplement ignorée. Si pas rempli, toutes les demandes sont comptabilisées à l'infini, ce qui pourrait entraîner une augmentation du temps d'attente avant qu'une demande acceptable puisse être finalement autorisée. Le dépassement doit toujours être supérieur ou égal à la limite.
+
+ratelimiter.modal.title=Ajouter un limiteur
+ratelimiter.modal.button.show=Ajouter un limiteur
+ratelimiter.modal.button.add=Ajouter
+ratelimiter.modal.button.cancel=Annuler
+
+ratelimiter.validation.presence=Cette valeur est requise!
+ratelimiter.validation.notANumber=Cette valeur doit être un nombre!
+ratelimiter.validation.notAnInteger=Cette valeur doit être un nombre entier!
+ratelimiter.validation.tooLow=Cette valeur ne doit pas être inférieur à {0}!
+ratelimiter.validation.overflowOverLimit=Le dépassement doit toujours être supérieur ou égal à la limite.
+
+ratelimiter.exhausted.title=Vous consultez ce site trop vite !
+ratelimiter.exhausted.intro=Ce site est soumis à une limitation de débit.
+ratelimiter.exhausted.exceeded=Vous avez dépassez votre limite de débit.
+ratelimiter.exhausted.waiting=Avant d''accèder le site à nouveau, vous devez attendre {0}.
+ratelimiter.exhausted.waitinfo=Poursuivre la consultation avant ce délai peut augmenter votre temps d'attente.
+</content>
+</xwikidoc>

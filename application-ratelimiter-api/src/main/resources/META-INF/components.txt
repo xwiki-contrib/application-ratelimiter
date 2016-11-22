@@ -1,0 +1,3 @@
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterBuilder
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterCache
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterServiceFactory
