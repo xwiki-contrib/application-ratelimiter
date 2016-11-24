@@ -20,33 +20,28 @@
 
 package org.xwiki.contrib.ratelimiter.internal;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import org.xwiki.component.annotation.Component;
+import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ratelimiter.RateLimiter;
-import org.xwiki.contrib.ratelimiter.RateLimiterService;
-import org.xwiki.contrib.ratelimiter.RateLimiterServiceFactory;
-import org.xwiki.observation.ObservationManager;
 
 /**
- * Default implementation of {@link RateLimiterService}.
+ * Rate Limiter logger used to log rate limiter events.
  *
  * @version $Id$
  */
-@Component
-@Singleton
-public class DefaultRateLimiterServiceFactory implements RateLimiterServiceFactory
+@Role
+public interface RateLimiterServiceLogger
 {
-    @Inject
-    private RateLimiterCache cache;
+    /**
+     * Log to the rate limiter log.
+     *
+     * @param consumer the consumer concerned.
+     * @param consumed the consumed entity.
+     * @param exhaustedLimiter the exhausted rate limiter.
+     */
+    void logAbuse(String consumer, String consumed, RateLimiter exhaustedLimiter);
 
-    @Inject
-    private ObservationManager observationManager;
-
-    @Override
-    public RateLimiterService create(RateLimiter rateLimiterTemplate)
-    {
-        return new DefaultRateLimiterService(cache, rateLimiterTemplate, observationManager);
-    }
+    /**
+     * @return the absolute path name of the log file.
+     */
+    String getLogFileName();
 }

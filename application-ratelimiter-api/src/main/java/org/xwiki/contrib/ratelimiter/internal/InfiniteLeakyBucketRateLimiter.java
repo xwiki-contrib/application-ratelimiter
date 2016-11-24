@@ -30,10 +30,9 @@ import org.xwiki.contrib.ratelimiter.RateLimiter;
  *
  * @version $Id$
  */
-class InfiniteLeakyBucketRateLimiter implements RateLimiter
+public class InfiniteLeakyBucketRateLimiter extends AbstractRateLimiter
 {
     protected final long leakrate;
-    protected final long limit;
     protected long lastUpdate;
     protected long bucketLevel;
 
@@ -46,8 +45,8 @@ class InfiniteLeakyBucketRateLimiter implements RateLimiter
      */
     public InfiniteLeakyBucketRateLimiter(long limit, long period, TimeUnit unit)
     {
+        super(limit, period, unit);
         this.leakrate = TimeUnit.NANOSECONDS.convert(period, unit) / limit;
-        this.limit = limit;
         this.lastUpdate = System.nanoTime();
     }
 
@@ -69,8 +68,8 @@ class InfiniteLeakyBucketRateLimiter implements RateLimiter
      */
     public InfiniteLeakyBucketRateLimiter(InfiniteLeakyBucketRateLimiter rateLimiter, boolean empty)
     {
+        super(rateLimiter);
         this.leakrate = rateLimiter.leakrate;
-        this.limit = rateLimiter.limit;
         if (!empty) {
             this.lastUpdate = rateLimiter.lastUpdate;
             this.bucketLevel = rateLimiter.bucketLevel;
@@ -101,16 +100,20 @@ class InfiniteLeakyBucketRateLimiter implements RateLimiter
     }
 
     @Override
-    public long getAvailableAmount()
+    public long getAvailableAmount(boolean update)
     {
-        internalConsume(0);
+        if (update) {
+            internalConsume(0);
+        }
         return limit - bucketLevel;
     }
 
     @Override
-    public long getWaitingTime(long amount, TimeUnit unit)
+    public long getWaitingTime(long amount, TimeUnit unit, boolean update)
     {
-        internalConsume(0);
+        if (update) {
+            internalConsume(0);
+        }
         long overflow = (bucketLevel - limit + amount);
         if (overflow <= 0) {
             return 0;

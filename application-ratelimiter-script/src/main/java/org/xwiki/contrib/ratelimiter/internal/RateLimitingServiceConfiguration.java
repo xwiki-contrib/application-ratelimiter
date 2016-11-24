@@ -20,33 +20,40 @@
 
 package org.xwiki.contrib.ratelimiter.internal;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import java.util.Locale;
 
-import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ratelimiter.RateLimiter;
-import org.xwiki.contrib.ratelimiter.RateLimiterService;
-import org.xwiki.contrib.ratelimiter.RateLimiterServiceFactory;
-import org.xwiki.observation.ObservationManager;
+import org.xwiki.component.annotation.Role;
 
 /**
- * Default implementation of {@link RateLimiterService}.
+ * Configuration of the rate limiting service.
  *
  * @version $Id$
  */
-@Component
-@Singleton
-public class DefaultRateLimiterServiceFactory implements RateLimiterServiceFactory
+@Role
+public interface RateLimitingServiceConfiguration
 {
-    @Inject
-    private RateLimiterCache cache;
+    /**
+     * @return the email of the sender of notification. Default to the admin email from preferences.
+     */
+    String getMailFromAddress();
 
-    @Inject
-    private ObservationManager observationManager;
+    /**
+     * @return the email of the recipient of abuse notification. Default to the admin email from preferences.
+     */
+    String getMailToAddress();
 
-    @Override
-    public RateLimiterService create(RateLimiter rateLimiterTemplate)
-    {
-        return new DefaultRateLimiterService(cache, rateLimiterTemplate, observationManager);
-    }
+    /**
+     * @return the minimum interval between similar notification. Default to 2 hours.
+     */
+    long getMailInterval();
+
+    /**
+     * @return a formatted string of the mail interval
+     */
+    String getFormattedMailInterval();
+
+    /**
+     * @return the locale used for logs and notifications. Default to english.
+     */
+    Locale getLocale();
 }

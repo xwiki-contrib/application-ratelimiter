@@ -37,6 +37,27 @@ public interface RateLimiter
     RateLimiter NOLIMIT = new NoLimitRateLimiter();
 
     /**
+     * @return the rate limiter period in the unit expressed during construction.
+     */
+    long getPeriod();
+
+    /**
+     * @param unit the unit requested for returning the period.
+     * @return the rate limiter period in the requested unit.
+     */
+    long getPeriod(TimeUnit unit);
+
+    /**
+     * @return the unit used for the period during construction.
+     */
+    TimeUnit getPeriodUnit();
+
+    /**
+     * @return the limit of this limiter.
+     */
+    long getLimit();
+
+    /**
      * Consume a given amount, and check if this is exceeding the limitation.
      *
      * @param amount the amount that will be consumed.
@@ -58,6 +79,12 @@ public interface RateLimiter
     long getAvailableAmount();
 
     /**
+     * @param update when true, update the state of the limiter before reporting the value.
+     * @return the current consumable amount.
+     */
+    long getAvailableAmount(boolean update);
+
+    /**
      * Return the time to wait before a given amount can be consumed with success.
      *
      * @param amount the amount that should be consumable.
@@ -65,6 +92,16 @@ public interface RateLimiter
      * @return the time to wait or 0 if the amount is consumable now.
      */
     long getWaitingTime(long amount, TimeUnit unit);
+
+    /**
+     * Return the time to wait before a given amount can be consumed with success.
+     *
+     * @param amount the amount that should be consumable.
+     * @param unit the unit in which the time to wait should be returned.
+     * @param update when true, update the state of the limiter before reporting the value.
+     * @return the time to wait or 0 if the amount is consumable now.
+     */
+    long getWaitingTime(long amount, TimeUnit unit, boolean update);
 
     /**
      * Reset the current limiter.

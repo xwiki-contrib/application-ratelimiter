@@ -25,75 +25,75 @@ import java.util.concurrent.TimeUnit;
 import org.xwiki.contrib.ratelimiter.RateLimiter;
 
 /**
- * A no limit rate limiter.
+ * Base class for {@link RateLimiter}.
  *
  * @version $Id$
  */
-public class NoLimitRateLimiter implements RateLimiter
+public abstract class AbstractRateLimiter implements RateLimiter
 {
+    protected final long period;
+    protected final TimeUnit unit;
+    protected final long limit;
+
+    /**
+     * Initializing constructor.
+     *
+     * @param limit the maximum amount of consumption over a period of time.
+     * @param period the period of time.
+     * @param unit the unit used to express the period of time.
+     */
+    public AbstractRateLimiter(long limit, long period, TimeUnit unit)
+    {
+        this.period = period;
+        this.unit = unit;
+        this.limit = limit;
+    }
+
+    /**
+     * Copy constructor with reinitialization.
+     *
+     * @param rateLimiter the source to copy.
+     */
+    public AbstractRateLimiter(AbstractRateLimiter rateLimiter)
+    {
+        this.period = rateLimiter.period;
+        this.unit = rateLimiter.unit;
+        this.limit = rateLimiter.limit;
+    }
+
     @Override
     public long getPeriod()
     {
-        return 0;
+        return period;
     }
 
     @Override
     public long getPeriod(TimeUnit unit)
     {
-        return 0;
+        return unit.convert(period, unit);
     }
 
     @Override
     public TimeUnit getPeriodUnit()
     {
-        return TimeUnit.MINUTES;
+        return unit;
     }
 
     @Override
     public long getLimit()
     {
-        return Long.MAX_VALUE;
-    }
-
-    @Override
-    public boolean consume(long amount)
-    {
-        return true;
-    }
-
-    @Override
-    public RateLimiter clone(boolean empty)
-    {
-        return null;
+        return limit;
     }
 
     @Override
     public long getAvailableAmount()
     {
-        return Long.MAX_VALUE;
-    }
-
-    @Override
-    public long getAvailableAmount(boolean update)
-    {
-        return 0;
+        return getAvailableAmount(true);
     }
 
     @Override
     public long getWaitingTime(long amount, TimeUnit unit)
     {
-        return 0;
-    }
-
-    @Override
-    public long getWaitingTime(long amount, TimeUnit unit, boolean update)
-    {
-        return 0;
-    }
-
-    @Override
-    public void reset()
-    {
-        //No-op
+        return getWaitingTime(amount, unit, true);
     }
 }

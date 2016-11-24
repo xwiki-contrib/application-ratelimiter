@@ -1,1 +1,7 @@
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterServiceConfiguration
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterServiceLocalization
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterServiceLogger
+org.xwiki.contrib.ratelimiter.internal.DefaultRateLimiterServiceMailer
+org.xwiki.contrib.ratelimiter.internal.RateLimiterExhaustedListener
+org.xwiki.contrib.ratelimiter.internal.RateLimiterServiceConfigurationSource
 org.xwiki.contrib.ratelimiter.script.RateLimiterScriptService

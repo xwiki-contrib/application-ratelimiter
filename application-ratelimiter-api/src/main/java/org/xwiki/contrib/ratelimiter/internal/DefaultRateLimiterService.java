@@ -21,10 +21,9 @@
 package org.xwiki.contrib.ratelimiter.internal;
 
 import org.xwiki.contrib.ratelimiter.RateLimiter;
+import org.xwiki.contrib.ratelimiter.RateLimiterEntry;
 import org.xwiki.contrib.ratelimiter.RateLimiterService;
 import org.xwiki.contrib.ratelimiter.event.RateLimiterExhaustedEvent;
-import org.xwiki.model.reference.EntityReference;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.observation.ObservationManager;
 
 /**
@@ -37,37 +36,41 @@ class DefaultRateLimiterService implements RateLimiterService
     private final RateLimiterCache cache;
     private final RateLimiter rateLimiterTemplate;
     private final ObservationManager observationManager;
-    private final EntityReferenceSerializer<String> serializer;
 
     DefaultRateLimiterService(RateLimiterCache cache, RateLimiter rateLimiterTemplate,
-        ObservationManager observationManager, EntityReferenceSerializer<String> serializer)
+        ObservationManager observationManager)
     {
         this.cache = cache;
         this.rateLimiterTemplate = rateLimiterTemplate;
         this.observationManager = observationManager;
-        this.serializer = serializer;
     }
 
     @Override
-    public boolean consume(EntityReference consumer, EntityReference consumed, long amount)
+    public boolean consume(Object consumer, Object consumed, long amount)
     {
         RateLimiter limiter = safeGetRateLimiter(consumer, consumed);
+
+        boolean wasNotExhausted = limiter.getAvailableAmount(false) >= 0;
+
         if (limiter.consume(amount)) {
             return true;
         }
 
-        observationManager.notify(new RateLimiterExhaustedEvent(serializer.serialize(consumer)), limiter, consumed);
+        if (wasNotExhausted) {
+            observationManager.notify(new RateLimiterExhaustedEvent(), this,
+                new RateLimiterEntry(consumer, consumed, limiter));
+        }
         return false;
     }
 
     @Override
-    public RateLimiter getRateLimiter(EntityReference consumer, EntityReference consumed)
+    public RateLimiter getRateLimiter(Object consumer, Object consumed)
     {
         RateLimiter limiter = cache.get(consumer, consumed);
         return (limiter != null) ? limiter : RateLimiter.NOLIMIT;
     }
 
-    private RateLimiter safeGetRateLimiter(EntityReference consumer, EntityReference consumed)
+    private RateLimiter safeGetRateLimiter(Object consumer, Object consumed)
     {
         RateLimiter limiter = cache.get(consumer, consumed);
         if (limiter == null) {

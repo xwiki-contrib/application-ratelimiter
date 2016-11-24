@@ -22,7 +22,6 @@ package org.xwiki.contrib.ratelimiter.internal;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ratelimiter.RateLimiter;
-import org.xwiki.model.reference.EntityReference;
 
 /**
  * A cache for storing rate limiters per entities (ie: users).
@@ -40,7 +39,7 @@ public interface RateLimiterCache
      * @return the rate limiter for the entity pair or NULL if the cache does not contains any rate limiter for that
      *         pair.
      */
-    RateLimiter get(EntityReference consumer, EntityReference consumed);
+    RateLimiter get(Object consumer, Object consumed);
 
     /**
      * Add the provided rate limiter to the cache for the given entity.
@@ -49,5 +48,5 @@ public interface RateLimiterCache
      * @param consumed the entity being consumed.
      * @param limiter the limiter to add.
      */
-    void add(EntityReference consumer, EntityReference consumed, RateLimiter limiter);
+    void add(Object consumer, Object consumed, RateLimiter limiter);
 }

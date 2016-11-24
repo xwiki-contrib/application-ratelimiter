@@ -35,7 +35,7 @@
   <date>1479743065000</date>
   <contentUpdateDate>1479382811000</contentUpdateDate>
   <version>1.1</version>
-  <title/>
+  <title>$services.localization.render('ratelimiter.config.page.title')</title>
   <defaultTemplate/>
   <validationScript/>
   <comment/>
@@ -386,5 +386,8 @@
       <levels>edit</levels>
     </property>
   </object>
-  <content/>
+  <content>{{velocity}}
+$services.localization.render('ratelimiter.config.page.intro')
+{{/velocity}}
+  </content>
 </xwikidoc>

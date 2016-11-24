@@ -20,33 +20,26 @@
 
 package org.xwiki.contrib.ratelimiter.internal;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import java.util.concurrent.TimeUnit;
 
-import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ratelimiter.RateLimiter;
-import org.xwiki.contrib.ratelimiter.RateLimiterService;
-import org.xwiki.contrib.ratelimiter.RateLimiterServiceFactory;
-import org.xwiki.observation.ObservationManager;
+import org.xwiki.component.annotation.Role;
 
 /**
- * Default implementation of {@link RateLimiterService}.
+ * Provide specialized localization services for the rate limiter.
  *
  * @version $Id$
  */
-@Component
-@Singleton
-public class DefaultRateLimiterServiceFactory implements RateLimiterServiceFactory
+@Role
+public interface RateLimiterServiceLocalization
 {
-    @Inject
-    private RateLimiterCache cache;
+    /**
+     * @return the log message used for logging abuses translated in the locale configured for the rate limiter service.
+     */
+    String getAbuseLogMessage();
 
-    @Inject
-    private ObservationManager observationManager;
-
-    @Override
-    public RateLimiterService create(RateLimiter rateLimiterTemplate)
-    {
-        return new DefaultRateLimiterService(cache, rateLimiterTemplate, observationManager);
-    }
+    /**
+     * @param unit unit to be translated.
+     * @return the translation of the given unit in the locale configured for the rate limiter service.
+     */
+    String getTranslatedUnit(TimeUnit unit);
 }

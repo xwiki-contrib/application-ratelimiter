@@ -20,43 +20,19 @@
 
 package org.xwiki.contrib.ratelimiter.event;
 
-import org.xwiki.observation.event.AbstractFilterableEvent;
-import org.xwiki.observation.event.filter.EventFilter;
+import org.xwiki.observation.event.Event;
 
 /**
  * Event emitted when a rate limiter has reach its configured limit and a consumption request has returned false.
  *
  * @version $Id$
  */
-public class RateLimiterExhaustedEvent extends AbstractFilterableEvent
+public class RateLimiterExhaustedEvent implements Event
 {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor initializing an event matching any other event of the same type.
-     */
-    public RateLimiterExhaustedEvent()
-    {
-    }
-
-    /**
-     * Constructor initializing an event matching only events of the same type affecting the same passed serialized
-     * entity reference of the entity having exhausted the limit.
-     *
-     * @param name serialized entity reference of the entity to observe.
-     */
-    public RateLimiterExhaustedEvent(String name)
-    {
-        super(name);
-    }
-
-    /**
-     * Constructor using a custom {@link EventFilter}.
-     *
-     * @param eventFilter the filter to use for matching events
-     */
-    public RateLimiterExhaustedEvent(EventFilter eventFilter)
-    {
-        super(eventFilter);
+    @Override
+    public boolean matches(Object otherEvent) {
+        return this.getClass().isAssignableFrom(otherEvent.getClass());
     }
 }

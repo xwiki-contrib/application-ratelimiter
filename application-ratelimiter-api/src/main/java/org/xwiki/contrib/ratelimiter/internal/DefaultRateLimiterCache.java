@@ -31,8 +31,6 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.ratelimiter.RateLimiter;
-import org.xwiki.model.reference.EntityReference;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
  * Default implementation of {@link RateLimiterCache}.
@@ -43,19 +41,12 @@ import org.xwiki.model.reference.EntityReferenceSerializer;
 @Singleton
 public class DefaultRateLimiterCache implements RateLimiterCache, Initializable
 {
-    /** Separator used for composing key for the cache. */
-    private static final String KEY_CACHE_SEPARATOR = "@@";
-
     /** Default capacity for security cache. */
     private static final int DEFAULT_CAPACITY = 500;
 
     /** Cache manager to create the cache. */
     @Inject
     private CacheManager cacheManager;
-
-    /** The keys in the cache are generated from instances of {@link org.xwiki.model.reference.EntityReference}. */
-    @Inject
-    private EntityReferenceSerializer<String> keySerializer;
 
     /** The cache instance. */
     private Cache<RateLimiter> cache;
@@ -76,9 +67,10 @@ public class DefaultRateLimiterCache implements RateLimiterCache, Initializable
         }
     }
 
-    private String getKey(EntityReference consumer, EntityReference consumed)
+    private String getKey(Object consumer, Object consumed)
     {
-        return keySerializer.serialize(consumer) + KEY_CACHE_SEPARATOR + keySerializer.serialize(consumed);
+        return Integer.toString(
+            ((consumer == null) ? 0 : 37 * consumer.hashCode()) + ((consumed == null) ? 0 : consumed.hashCode()));
     }
 
     @Override
@@ -88,13 +80,13 @@ public class DefaultRateLimiterCache implements RateLimiterCache, Initializable
     }
 
     @Override
-    public RateLimiter get(EntityReference consumer, EntityReference consumed)
+    public RateLimiter get(Object consumer, Object consumed)
     {
         return cache.get(getKey(consumer, consumed));
     }
 
     @Override
-    public void add(EntityReference consumer, EntityReference consumed, RateLimiter limiter)
+    public void add(Object consumer, Object consumed, RateLimiter limiter)
     {
         cache.set(getKey(consumer, consumed), limiter);
     }

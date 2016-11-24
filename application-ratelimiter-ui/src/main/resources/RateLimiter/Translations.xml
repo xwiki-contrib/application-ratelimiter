@@ -32,8 +32,8 @@
   <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1479383183000</creationDate>
-  <date>1479809765000</date>
-  <contentUpdateDate>1479809765000</contentUpdateDate>
+  <date>1480010850000</date>
+  <contentUpdateDate>1480010850000</contentUpdateDate>
   <version>1.1</version>
   <title/>
   <defaultTemplate/>
@@ -74,10 +74,17 @@
     <className>XWiki.TranslationDocumentClass</className>
     <guid>5c033774-6c3d-48fa-be67-9fbbb0f73f74</guid>
     <property>
-      <scope>ON_DEMAND</scope>
+      <scope>WIKI</scope>
     </property>
   </object>
-  <content>ratelimiter.config.intro=The rate limiting service provides a way to control how fast users can consume your website content and prevent abusive site grabbing. Through this configuration you can define one or more allow consumption rates for different periods of time. All changes are applied immediately for new visitors, while existing visitors continue with their previous configuration until their next visit or application restart. If you delete all limitations, the service is deactivated for all users immediately. Administrators are not affected by the rate limitation and anonymous users are limited by their IP address.
+  <content>admin.ratelimiter=Rate Limiter
+admin.ratelimiter.description=Provides rate limiting services to prevent abusive site grabbing
+admin.ratelimiter.configuration=Rate Limiter Configuration
+admin.ratelimiter.configuration.description=Configure rate limiters and mail notifications
+admin.ratelimiter.report=Rate Limiter Reporting
+admin.ratelimiter.report.description=View recent abuses exceeding the configured rate limiters
+
+ratelimiter.config.intro=The rate limiting service provides a way to control how fast users can consume your website content and prevent abusive site grabbing. Through this configuration you can define one or more allow consumption rates for different periods of time. All changes are applied immediately for new visitors, while existing visitors continue with their previous configuration until their next visit or application restart. If you delete all limitations, the service is deactivated for all users immediately. Administrators are not affected by the rate limitation and anonymous users are limited by their IP address.
 ratelimiter.config.ratelimiters=Configured Rate Limiters
 ratelimiter.config.livetable.limit=Limit
 ratelimiter.config.livetable.period=Period
@@ -87,17 +94,20 @@ ratelimiter.config.error.norights=You should have admin rights to manage this co
 ratelimiter.config.livetable.limit.requestper=requests&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;/
 ratelimiter.config.livetable.overflow.never=Never
 ratelimiter.config.livetable.overflow.requests=requests
+ratelimiter.config.page.title=Rate limiter configuration
+ratelimiter.config.page.intro=This page hold the current rate limiter configuration
+
 
 RateLimiter.RateLimiterConfigClass_unit_DAYS=day(s)
 RateLimiter.RateLimiterConfigClass_unit_HOURS=hour(s)
 RateLimiter.RateLimiterConfigClass_unit_MINUTES=minute(s)
 
 RateLimiter.RateLimiterConfigClass_limit=Requests limit
-RateLimiter.RateLimiterConfigClass_limit_tooltip=Maximum amount of requests allowed during the given period of time. Requests are strictly equivalent to pages. Loading a page require at least one request, but could generate more request to load images in the page, display attachements, etc...
+RateLimiter.RateLimiterConfigClass_limit.hint=Maximum number of requests allowed during the given period of time. Requests are not strictly equivalent to pages. Loading a page requires at least one request, but could generate more requests to load images in the page, display attachments, etc...
 RateLimiter.RateLimiterConfigClass_period=Time period
-RateLimiter.RateLimiterConfigClass_period_tooltip=The shifting time period taken into account to enforced the above limit. The effective limitation is not to exceed limit/period requests.
+RateLimiter.RateLimiterConfigClass_period.hint=The shifting time period taken into account to enforce the above limit. The effective limitation is not to exceed limit/period requests.
 RateLimiter.RateLimiterConfigClass_overflow=Overflow
-RateLimiter.RateLimiterConfigClass_overflow_tooltip=Amount of request before incomming request stop to be accounted for the purpose of rate limiting. All requests made in excess that goes over the overflow will be ignored. If empty, all request are accounted infinitely, which could cause increasing waiting time before an acceptable request could be finally allowed. The overflow should be higher or equal to the requests limit.
+RateLimiter.RateLimiterConfigClass_overflow.hint=Number of requests before incoming requests stop being accounted for the purpose of rate limiting. All requests made in excess that goes over the overflow will be ignored. If empty, all requests are accounted infinitely, which could cause increasing waiting time before an acceptable request could be finally allowed. The overflow should be higher or equal to the requests limit.
 
 ratelimiter.modal.title=Add a new limiter
 ratelimiter.modal.button.show=Add a new limiter
@@ -109,11 +119,32 @@ ratelimiter.validation.notANumber=Must be a number!
 ratelimiter.validation.notAnInteger=Must be an integer!
 ratelimiter.validation.tooLow=Must not be less than {0}!
 ratelimiter.validation.overflowOverLimit=Overflow should be higher or equal to the requests limit!
+ratelimiter.validation.email=Must be a valid email address!
+ratelimiter.validation.language=Must be one of the available translations ('en' or 'fr')!
 
 ratelimiter.exhausted.title=You are consuming this site too fast!
 ratelimiter.exhausted.intro=This site is subject to rate limiting.
 ratelimiter.exhausted.exceeded=You have exceeded your request rate.
 ratelimiter.exhausted.waiting=Before accessing again, you should wait at least {0}.
 ratelimiter.exhausted.waitinfo=Proceeding to further requests might increase your waiting time.
-{{/error}}</content>
+
+ratelimiter.config.mailnotification=Mail notification configuration
+
+RateLimiter.RateLimiterServiceConfigClass_mail_from=Sender address
+RateLimiter.RateLimiterServiceConfigClass_mail_from.hint=E-mail address from which notification will appear to be sent. Defaulted to the configured administrator address.
+RateLimiter.RateLimiterServiceConfigClass_mail_to=Recipient address
+RateLimiter.RateLimiterServiceConfigClass_mail_to.hint=E-mail address to which notification should be sent. Defaulted to the configured administrator address.
+RateLimiter.RateLimiterServiceConfigClass_mail_interval=Minimum interval
+RateLimiter.RateLimiterServiceConfigClass_mail_interval.hint=Repeated notifications for similar abuses happening during the specified interval will be logged, but no mail will be sent. Defaulted to 2 hours.
+RateLimiter.RateLimiterServiceConfigClass_interval_unit_DAYS=day(s)
+RateLimiter.RateLimiterServiceConfigClass_interval_unit_HOURS=hour(s)
+RateLimiter.RateLimiterServiceConfigClass_interval_unit_MINUTES=minute(s)
+RateLimiter.RateLimiterServiceConfigClass_language=Language
+RateLimiter.RateLimiterServiceConfigClass_language.hint=Default language used for mails and logs (i.e. "en")
+
+ratelimiter.log.abuse.message=User [{}] tried to abuse of [{}] by exceeding the {} requests / {} {} limit.
+
+ratelimiter.mail.template.title=Mail templates
+ratelimiter.mail.template.intro=This page contains the mail templates for notification emails of the rate limiter.
+ratelimiter.mail.template.edit=Edit templates</content>
 </xwikidoc>

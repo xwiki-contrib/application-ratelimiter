@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="RateLimiter.NotificationMailTemplate" locale="">
+  <web>RateLimiter</web>
+  <name>NotificationMailTemplate</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>RateLimiter.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1479985965000</creationDate>
+  <date>1480008499000</date>
+  <contentUpdateDate>1480008499000</contentUpdateDate>
+  <version>1.1</version>
+  <title>$services.localization.render('ratelimiter.mail.template.title')</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <object>
+    <class>
+      <name>XWiki.Mail</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <html>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>html</name>
+        <number>4</number>
+        <prettyName>HTML</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </html>
+      <language>
+        <disabled>0</disabled>
+        <name>language</name>
+        <number>2</number>
+        <prettyName>Language</prettyName>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </language>
+      <subject>
+        <disabled>0</disabled>
+        <name>subject</name>
+        <number>1</number>
+        <prettyName>Subject</prettyName>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </subject>
+      <text>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>text</name>
+        <number>3</number>
+        <prettyName>Text</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </text>
+    </class>
+    <name>RateLimiter.NotificationMailTemplate</name>
+    <number>0</number>
+    <className>XWiki.Mail</className>
+    <guid>7613e09a-785e-43df-9078-f299e2117f3c</guid>
+    <property>
+      <html>&lt;p&gt;This is automated email notification from your site [${request.getServerName()}].&lt;/p&gt;
+
+&lt;p&gt;User [&lt;strong&gt;$consumer&lt;/strong&gt;] tried to abuse of [&lt;strong&gt;$consumed&lt;/strong&gt;] by exceeding the &lt;strong&gt;$limit requests / $period&lt;/strong&gt; limit.&lt;/p&gt;
+
+&lt;p&gt;You can find more detailed logs of all abuses in the &lt;a href="${xwiki.getDocument("xwiki:XWiki.XWikiPreferences").getExternalURL("admin","editor=globaladmin&amp;section=ratelimiter.report")}"&gt;rate limiter reporting&lt;/a&gt; available in your site administration.&lt;/p&gt;
+
+&lt;p&gt;P.S.: Even if this abuse is repeated, this will be the only alert you will receive in the next $interval.&lt;/p&gt;
+</html>
+    </property>
+    <property>
+      <language>en</language>
+    </property>
+    <property>
+      <subject>[${request.getServerName()}] Rate limiter - Abuse Notification for [$consumer] on [$consumed]</subject>
+    </property>
+    <property>
+      <text>This is automated email notification from your site [${request.getServerName()}].
+
+User [$consumer] tried to abuse of [$consumed] by exceeding the $limit requests / $period limit.
+
+You can find more detailed logs of all abuses in the rate limiter reporting available in your site administration.
+
+P.S.: Even if this abuse is repeated, this will be the only alert you will receive in the next $interval.
+</text>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.Mail</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <html>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>html</name>
+        <number>4</number>
+        <prettyName>HTML</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </html>
+      <language>
+        <disabled>0</disabled>
+        <name>language</name>
+        <number>2</number>
+        <prettyName>Language</prettyName>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </language>
+      <subject>
+        <disabled>0</disabled>
+        <name>subject</name>
+        <number>1</number>
+        <prettyName>Subject</prettyName>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </subject>
+      <text>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>text</name>
+        <number>3</number>
+        <prettyName>Text</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </text>
+    </class>
+    <name>RateLimiter.NotificationMailTemplate</name>
+    <number>1</number>
+    <className>XWiki.Mail</className>
+    <guid>ddc17c0d-9338-4a3c-b1dd-18bd782db4c2</guid>
+    <property>
+      <html>&lt;p&gt;Ceci est une notification par courriel automatisée de votre site [${request.getServerName()}].&lt;/p&gt;
+
+&lt;p&gt;L'utilisateur  [&lt;strong&gt;$consumer&lt;/strong&gt;] a essayé d'abuser de [&lt;strong&gt;$consumed&lt;/strong&gt;] en dépassant la limite imposée de &lt;strong&gt;$limit requêtes / $period&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vous pouvez trouver des informations plus détaillées de tous ces abus dans le &lt;a href="${xwiki.getDocument("xwiki:XWiki.XWikiPreferences").getExternalURL("admin","editor=globaladmin&amp;section=ratelimiter.report")}"&gt;rapport du limiteur de débit&lt;/a&gt; disponible sur l'administration de votre site.&lt;/p&gt;
+
+&lt;p&gt;P.S.: Même si cet abus se répète, ceci est la seule alerte que vous recevrez durant la (les) $interval.&lt;/p&gt;
+</html>
+    </property>
+    <property>
+      <language>fr</language>
+    </property>
+    <property>
+      <subject>[${request.getServerName()}] Limiteur de débit - Notification d'abus par [$consumer] sur [$consumed]</subject>
+    </property>
+    <property>
+      <text>Ceci est une notification par courriel automatisée de votre site [${request.getServerName()}].
+
+L'utilisateur [$consumer] a essayé d'abuser de [$consumed] en dépassant la limite imposée de $limit requêtes / $period.
+
+Vous pouvez trouver des informations plus détaillées de tous ces abus dans le rapport du limiteur de débit disponible sur l'administration de votre site.
+
+P.S.: Même si cet abus se répète, ceci est la seule alerte que vous recevrez durant la (les) $interval.
+</text>
+    </property>
+  </object>
+  <content>{{velocity}}
+$services.localization.render('ratelimiter.mail.template.intro')
+
+[[$services.localization.render('ratelimiter.mail.template.edit')&gt;&gt;path:$doc.getURL('edit','editor=object')]]
+{{/velocity}}
+</content>
+</xwikidoc>

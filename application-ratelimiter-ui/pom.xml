@@ -42,7 +42,7 @@
   <dependencies>
     <dependency>
       <groupId>org.xwiki.contrib.ratelimiter</groupId>
-      <artifactId>application-ratelimiter-api</artifactId>
+      <artifactId>application-ratelimiter-script</artifactId>
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>

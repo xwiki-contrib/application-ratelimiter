@@ -21,28 +21,51 @@
 package org.xwiki.contrib.ratelimiter;
 
 /**
- * A rate limiting service allows limiting consumption rate of a resource based on a configured rate limiter.
+ * A rate limiter associated to a consumer and a consumed entity.
  *
  * @version $Id$
  */
-public interface RateLimiterService
+public class RateLimiterEntry
 {
-    /**
-     * Consume, and check if this is exceeding the limitation.
-     *
-     * @param consumer the entity consuming.
-     * @param consumed the entity being consumed.
-     * @param amount the amount that will be consumed.
-     * @return true if the consumption is under the limitation.
-     */
-    boolean consume(Object consumer, Object consumed, long amount);
+    private final Object consumer;
+    private final Object consumed;
+    private final RateLimiter limiter;
 
     /**
-     * Retrieve the actual rate limiter for a given consumer on a given consumed entity.
+     * Constructor for triggered events.
      *
      * @param consumer the entity consuming.
      * @param consumed the entity being consumed.
-     * @return a rate limiter, if no limiter is currently available {@link RateLimiter#NOLIMIT} is returned.
+     * @param limiter the rate limiter.
      */
-    RateLimiter getRateLimiter(Object consumer, Object consumed);
+    public RateLimiterEntry(Object consumer, Object consumed, RateLimiter limiter)
+    {
+        this.consumer = consumer;
+        this.consumed = consumed;
+        this.limiter = limiter;
+    }
+
+    /**
+     * @return the entity consuming.
+     */
+    public Object getConsumer()
+    {
+        return consumer;
+    }
+
+    /**
+     * @return the entity being consumed.
+     */
+    public Object getConsumed()
+    {
+        return consumed;
+    }
+
+    /**
+     * @return the rate limiter
+     */
+    public RateLimiter getLimiter()
+    {
+        return limiter;
+    }
 }

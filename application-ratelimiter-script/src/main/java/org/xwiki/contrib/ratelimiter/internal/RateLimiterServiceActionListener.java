@@ -26,8 +26,6 @@ import java.util.List;
 import org.apache.velocity.VelocityContext;
 import org.xwiki.bridge.event.ActionExecutingEvent;
 import org.xwiki.contrib.ratelimiter.RateLimiterService;
-import org.xwiki.contrib.ratelimiter.script.RateLimiterScriptService;
-import org.xwiki.model.reference.EntityReference;
 import org.xwiki.observation.EventListener;
 import org.xwiki.observation.event.Event;
 import org.xwiki.security.authorization.ContextualAuthorizationManager;
@@ -38,13 +36,14 @@ import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.api.Document;
 import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.web.XWikiRequest;
 
 /**
  * Listen to action in order to introduce appropriate rate limitation.
  *
  * @version $Id$
  */
-public class RateLimiterActionListener implements EventListener
+public class RateLimiterServiceActionListener implements EventListener
 {
     /**
      * Name of this listener.
@@ -68,7 +67,6 @@ public class RateLimiterActionListener implements EventListener
     private final VelocityManager velocityManager;
     private final ContextualAuthorizationManager contextualAuthorizationManager;
 
-
     /**
      * Constructor.
      *
@@ -76,12 +74,17 @@ public class RateLimiterActionListener implements EventListener
      * @param velocityManager the velocity manager in order to get the velocity context.
      * @param contextualAuthorizationManager the authorization manager in order to avoid rate limiting on admins.
      */
-    public RateLimiterActionListener(RateLimiterService service, VelocityManager velocityManager,
+    public RateLimiterServiceActionListener(RateLimiterService service, VelocityManager velocityManager,
         ContextualAuthorizationManager contextualAuthorizationManager)
     {
         this.service = service;
         this.velocityManager = velocityManager;
         this.contextualAuthorizationManager = contextualAuthorizationManager;
+    }
+
+    private static String getRemoteAddress(XWikiRequest request) {
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        return (ipAddress != null) ? ipAddress.split(",", 1)[0] : request.getRemoteAddr();
     }
 
     @Override
@@ -106,10 +109,10 @@ public class RateLimiterActionListener implements EventListener
         XWikiContext xcontext = (XWikiContext) data;
         XWikiDocument doc = xcontext.getDoc();
         String action = ((ActionExecutingEvent) event).getActionName();
-        EntityReference user = xcontext.getUserReference();
+        Object user = xcontext.getUserReference();
 
         if (user == null) {
-            user = RateLimiterScriptService.getIpUser(xcontext);
+            user = getRemoteAddress(xcontext.getRequest());
         }
 
         boolean allowed =

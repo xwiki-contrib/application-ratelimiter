@@ -20,33 +20,23 @@
 
 package org.xwiki.contrib.ratelimiter.internal;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import org.xwiki.component.annotation.Component;
+import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ratelimiter.RateLimiter;
-import org.xwiki.contrib.ratelimiter.RateLimiterService;
-import org.xwiki.contrib.ratelimiter.RateLimiterServiceFactory;
-import org.xwiki.observation.ObservationManager;
 
 /**
- * Default implementation of {@link RateLimiterService}.
+ * Rate limiter mailer for notifying administrator of abuses.
  *
  * @version $Id$
  */
-@Component
-@Singleton
-public class DefaultRateLimiterServiceFactory implements RateLimiterServiceFactory
+@Role
+public interface RateLimiterServiceMailer
 {
-    @Inject
-    private RateLimiterCache cache;
-
-    @Inject
-    private ObservationManager observationManager;
-
-    @Override
-    public RateLimiterService create(RateLimiter rateLimiterTemplate)
-    {
-        return new DefaultRateLimiterService(cache, rateLimiterTemplate, observationManager);
-    }
+    /**
+     * Send a mail notification of an abuse of the service.
+     *
+     * @param consumer the consumer.
+     * @param consumed the consumed entity.
+     * @param exhaustedLimiter the exhausted rate limiter.
+     */
+    void sendAbuseNotification(String consumer, String consumed, RateLimiter exhaustedLimiter);
 }

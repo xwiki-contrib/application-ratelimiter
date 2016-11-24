@@ -35,9 +35,9 @@ import org.xwiki.contrib.ratelimiter.RateLimiter;
 import org.xwiki.contrib.ratelimiter.RateLimiterBuilder;
 import org.xwiki.contrib.ratelimiter.RateLimiterService;
 import org.xwiki.contrib.ratelimiter.RateLimiterServiceFactory;
-import org.xwiki.contrib.ratelimiter.internal.RateLimiterActionListener;
+import org.xwiki.contrib.ratelimiter.internal.RateLimiterServiceActionListener;
+import org.xwiki.contrib.ratelimiter.internal.RateLimiterServiceLogger;
 import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.model.reference.EntityReference;
 import org.xwiki.observation.EventListener;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.script.service.ScriptService;
@@ -64,6 +64,9 @@ public class RateLimiterScriptService implements ScriptService
     private RateLimiterServiceFactory factory;
 
     @Inject
+    private RateLimiterServiceLogger rateLimiterServiceLogger;
+
+    @Inject
     private ContextualAuthorizationManager contextualAuthorizationManager;
 
     @Inject
@@ -75,8 +78,8 @@ public class RateLimiterScriptService implements ScriptService
     @Inject
     private VelocityManager velocityManager;
 
-    private DocumentReference getCurrentDocumentReference() {
-        return contextProvider.get().getDoc().getDocumentReference();
+    private Object getCurrentConsumed() {
+        return contextProvider.get().getDoc().getDocumentReference().getWikiReference();
     }
 
     private static String getRemoteAddress(XWikiRequest request) {
@@ -84,17 +87,9 @@ public class RateLimiterScriptService implements ScriptService
         return (ipAddress != null) ? ipAddress.split(",", 1)[0] : request.getRemoteAddr();
     }
 
-    private EntityReference getCurrentUserReference() {
+    private Object getCurrentConsumer() {
         DocumentReference user = contextProvider.get().getUserReference();
-        return user == null ? getIpUser(contextProvider.get()) : user;
-    }
-
-    /**
-     * @param context current XWiki context.
-     * @return an EntityReference for the current requesting IP.
-     */
-    public static EntityReference getIpUser(XWikiContext context) {
-        return new DocumentReference(context.getWikiId(), "IPAddress", getRemoteAddress(context.getRequest()));
+        return user == null ? getRemoteAddress(contextProvider.get().getRequest()) : user;
     }
 
     /**
@@ -129,14 +124,14 @@ public class RateLimiterScriptService implements ScriptService
     public void setActionRateLimiter(RateLimiter limiterTemplate)
     {
         if (contextualAuthorizationManager.hasAccess(Right.PROGRAM)) {
-            EventListener listener = observationManager.getListener(RateLimiterActionListener.NAME);
+            EventListener listener = observationManager.getListener(RateLimiterServiceActionListener.NAME);
             if (listener != null) {
-                observationManager.removeListener(RateLimiterActionListener.NAME);
+                observationManager.removeListener(RateLimiterServiceActionListener.NAME);
             }
 
             if (limiterTemplate != null) {
                 observationManager.addListener(
-                    new RateLimiterActionListener(factory.create(limiterTemplate),
+                    new RateLimiterServiceActionListener(factory.create(limiterTemplate),
                         velocityManager, contextualAuthorizationManager));
             }
         }
@@ -147,9 +142,9 @@ public class RateLimiterScriptService implements ScriptService
      */
     public RateLimiterService getService()
     {
-        EventListener listener = observationManager.getListener(RateLimiterActionListener.NAME);
+        EventListener listener = observationManager.getListener(RateLimiterServiceActionListener.NAME);
         if (listener != null) {
-            return ((RateLimiterActionListener) listener).getService();
+            return ((RateLimiterServiceActionListener) listener).getService();
         }
         return null;
     }
@@ -165,7 +160,7 @@ public class RateLimiterScriptService implements ScriptService
     {
         RateLimiterService service = getService();
         return service == null
-            || service.consume(getCurrentUserReference(), getCurrentDocumentReference().getWikiReference(), amount);
+            || service.consume(getCurrentConsumer(), getCurrentConsumed(), amount);
     }
 
     /**
@@ -177,7 +172,7 @@ public class RateLimiterScriptService implements ScriptService
      * @param amount the amount being consumed.
      * @return true if the consumption was successful.
      */
-    public boolean consume(EntityReference consumer, EntityReference consumed, long amount)
+    public boolean consume(Object consumer, Object consumed, long amount)
     {
         if (contextualAuthorizationManager.hasAccess(Right.PROGRAM)) {
             RateLimiterService service = getService();
@@ -194,7 +189,7 @@ public class RateLimiterScriptService implements ScriptService
     {
         RateLimiterService service = getService();
         return service == null ? Long.MAX_VALUE
-            : service.getRateLimiter(getCurrentUserReference(), getCurrentDocumentReference().getWikiReference())
+            : service.getRateLimiter(getCurrentConsumer(), getCurrentConsumed())
                 .getAvailableAmount();
     }
 
@@ -203,7 +198,7 @@ public class RateLimiterScriptService implements ScriptService
      * @param consumed the entity being consumed.
      * @return the current consumable amount for the current user on the current wiki.
      */
-    public long getAvailableAmount(EntityReference consumer, EntityReference consumed)
+    public long getAvailableAmount(Object consumer, Object consumed)
     {
         if (contextualAuthorizationManager.hasAccess(Right.PROGRAM)) {
             RateLimiterService service = getService();
@@ -224,7 +219,7 @@ public class RateLimiterScriptService implements ScriptService
     {
         RateLimiterService service = getService();
         return service == null ? 0
-            : service.getRateLimiter(getCurrentUserReference(), getCurrentDocumentReference().getWikiReference())
+            : service.getRateLimiter(getCurrentConsumer(), getCurrentConsumed())
                 .getWaitingTime(amount, unit);
     }
 
@@ -237,7 +232,7 @@ public class RateLimiterScriptService implements ScriptService
      * @param unit the {@link TimeUnit} to use for reporting the return value.
      * @return the time to wait or 0 if the amount is consumable now.
      */
-    public long getWaitingTime(EntityReference consumer, EntityReference consumed, long amount, TimeUnit unit)
+    public long getWaitingTime(Object consumer, Object consumed, long amount, TimeUnit unit)
     {
         if (contextualAuthorizationManager.hasAccess(Right.PROGRAM)) {
             RateLimiterService service = getService();
@@ -258,7 +253,6 @@ public class RateLimiterScriptService implements ScriptService
      */
     public String getFormattedWaitingTime(long amount, Locale locale)
     {
-        RateLimiterService service = getService();
         Period period = new Period(getWaitingTime(amount, TimeUnit.MILLISECONDS));
         PeriodFormatter formatter = PeriodFormat.wordBased(locale);
         return formatter.print(period);
@@ -274,11 +268,10 @@ public class RateLimiterScriptService implements ScriptService
      * @param locale the locale used to format the result.
      * @return the time to wait as a formatted string.
      */
-    public String getFormattedWaitingTime(EntityReference consumer, EntityReference consumed, long amount,
+    public String getFormattedWaitingTime(Object consumer, Object consumed, long amount,
         Locale locale)
     {
         if (contextualAuthorizationManager.hasAccess(Right.PROGRAM)) {
-            RateLimiterService service = getService();
             Period period = new Period(getWaitingTime(consumer, consumed, amount, TimeUnit.MILLISECONDS));
             PeriodFormatter formatter = PeriodFormat.wordBased(locale);
             return formatter.print(period);
@@ -301,8 +294,16 @@ public class RateLimiterScriptService implements ScriptService
             if (service == null) {
                 return RateLimiter.NOLIMIT;
             }
-            return service.getRateLimiter(getCurrentUserReference(), getCurrentDocumentReference().getWikiReference());
+            return service.getRateLimiter(getCurrentConsumer(), getCurrentConsumed());
         }
         return null;
+    }
+
+    /**
+     * @return the filename of the rate limiter log.
+     */
+    public String getLogFileName()
+    {
+        return rateLimiterServiceLogger.getLogFileName();
     }
 }
