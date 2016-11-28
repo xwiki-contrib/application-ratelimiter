@@ -49,4 +49,9 @@ public interface RateLimiterCache
      * @param limiter the limiter to add.
      */
     void add(Object consumer, Object consumed, RateLimiter limiter);
+
+    /**
+     * Clear the cache.
+     */
+    void clear();
 }

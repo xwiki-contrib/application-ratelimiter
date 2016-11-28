@@ -84,7 +84,7 @@ admin.ratelimiter.configuration.description=Configure rate limiters and mail not
 admin.ratelimiter.report=Rate Limiter Reporting
 admin.ratelimiter.report.description=View recent abuses exceeding the configured rate limiters
 
-ratelimiter.config.intro=The rate limiting service provides a way to control how fast users can consume your website content and prevent abusive site grabbing. Through this configuration you can define one or more allow consumption rates for different periods of time. All changes are applied immediately for new visitors, while existing visitors continue with their previous configuration until their next visit or application restart. If you delete all limitations, the service is deactivated for all users immediately. Administrators are not affected by the rate limitation and anonymous users are limited by their IP address.
+ratelimiter.config.intro=The rate limiting service provides a way to control how fast users can consume your website content and prevent abusive site grabbing. Through this configuration you can define one or more allow consumption rates for different periods of time. All changes are applied immediately for all visitors, existing visitors states are cleared. If you delete all limitations, the service is deactivated for all users immediately. Administrators are not affected by the rate limitation and anonymous users are limited by their IP address.
 ratelimiter.config.ratelimiters=Configured Rate Limiters
 ratelimiter.config.livetable.limit=Limit
 ratelimiter.config.livetable.period=Period

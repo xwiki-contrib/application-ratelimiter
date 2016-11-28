@@ -126,6 +126,9 @@ public class RateLimiterScriptService implements ScriptService
         if (contextualAuthorizationManager.hasAccess(Right.PROGRAM)) {
             EventListener listener = observationManager.getListener(RateLimiterServiceActionListener.NAME);
             if (listener != null) {
+                if (listener instanceof RateLimiterServiceActionListener) {
+                    ((RateLimiterServiceActionListener) listener).getService().clearCache();
+                }
                 observationManager.removeListener(RateLimiterServiceActionListener.NAME);
             }
 

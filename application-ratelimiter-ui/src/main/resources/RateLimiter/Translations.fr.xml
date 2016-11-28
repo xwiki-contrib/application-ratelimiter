@@ -43,13 +43,13 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>admin.ratelimiter=Limiteur de débit
-admin.ratelimiter.description=Fournit des services de limitation de débits afin d'éviter l'aspiration abusive de votre site
+admin.ratelimiter.description=Fournit des services de limitation de débit afin d'éviter l'aspiration abusive de votre site
 admin.ratelimiter.configuration=Configuration des limiteurs
 admin.ratelimiter.configuration.description=Configuration des limiteurs de débit et des notifications par courriel
 admin.ratelimiter.report=Rapport des limiteurs
 admin.ratelimiter.report.description=Voir les tentatives d'abus récentes sur les limites imposées
 
-ratelimiter.config.intro=Le service de limitation de débit offre un moyen de contrôler la rapidité avec laquelle les utilisateurs peuvent consommer le contenu de votre site Web et empêcher les aspirations abusives. Grâce à cette configuration, vous pouvez définir un ou plusieurs taux de consommation autorisés pour différentes périodes. Toutes les modifications sont appliquées immédiatement pour les nouveaux visiteurs, tandis que les visiteurs existants poursuivent leur configuration précédente jusqu'à leur prochaine visite ou le redémarrage de l'application. Si vous supprimez toutes les limitations, le service est immédiatement désactivé pour tous les utilisateurs. Les administrateurs ne sont pas affectés par ces limitations et les visiteurs anonymes sont limités par leur adresse IP.
+ratelimiter.config.intro=Le service de limitation de débit offre un moyen de contrôler la rapidité avec laquelle les utilisateurs peuvent consommer le contenu de votre site web et empêcher les aspirations abusives. Grâce à cette configuration, vous pouvez définir un ou plusieurs taux de consommation autorisés pour différentes périodes. Toutes les modifications sont appliquées immédiatement pour tout les visiteurs, l'état des visiteurs existants est remis à zéro. Si vous supprimez toutes les limitations, le service est immédiatement désactivé pour tous les utilisateurs. Les administrateurs ne sont pas affectés par ces limitations et les visiteurs anonymes sont limités par leur adresse IP.
 ratelimiter.config.ratelimiters=Limiteurs de débit configurés
 ratelimiter.config.livetable.limit=Limite
 ratelimiter.config.livetable.period=Periode
@@ -71,20 +71,20 @@ RateLimiter.RateLimiterConfigClass_limit.hint=Nombre maximum de requêtes autori
 RateLimiter.RateLimiterConfigClass_period=Période
 RateLimiter.RateLimiterConfigClass_period.hint=La période glissante prise en compte pour appliquer la limite ci-dessus. La limitation effective consiste à ne pas dépasser &lt;limite&gt; requêtes par &lt;période&gt;.
 RateLimiter.RateLimiterConfigClass_overflow=Dépassement
-RateLimiter.RateLimiterConfigClass_overflow.hint=Nombre de requêtes prise en considération pour la limitation du débit. Toute requête faite en excès de ce dépassement sera simplement ignorée. Si pas rempli, toutes les demandes sont comptabilisées à l'infini, ce qui pourrait entraîner une augmentation du temps d'attente avant qu'une demande acceptable puisse être finalement autorisée. Le dépassement doit toujours être supérieur ou égal à la limite.
+RateLimiter.RateLimiterConfigClass_overflow.hint=Nombre de requêtes prises en considération pour la limitation du débit. Toute requête faite en excès de ce dépassement sera simplement ignorée. Si vide, toutes les demandes sont comptabilisées à l'infini, ce qui pourrait entraîner une augmentation du temps d'attente avant qu'une demande acceptable puisse être finalement autorisée. Le dépassement doit toujours être supérieur ou égal à la limite.
 
 ratelimiter.modal.title=Ajouter un limiteur
 ratelimiter.modal.button.show=Ajouter un limiteur
 ratelimiter.modal.button.add=Ajouter
 ratelimiter.modal.button.cancel=Annuler
 
-ratelimiter.validation.presence=Cette valeur est requise!
-ratelimiter.validation.notANumber=Cette valeur doit être un nombre!
-ratelimiter.validation.notAnInteger=Cette valeur doit être un nombre entier!
-ratelimiter.validation.tooLow=Cette valeur ne doit pas être inférieur à {0}!
+ratelimiter.validation.presence=Cette valeur est requise !
+ratelimiter.validation.notANumber=Cette valeur doit être un nombre !
+ratelimiter.validation.notAnInteger=Cette valeur doit être un nombre entier !
+ratelimiter.validation.tooLow=Cette valeur ne doit pas être inférieur à {0} !
 ratelimiter.validation.overflowOverLimit=Le dépassement doit toujours être supérieur ou égal à la limite.
 ratelimiter.validation.email=Cette valeur doit être un email valide!
-ratelimiter.validation.language=Cette valeur doit être une langue disponible en traduction ('en' ou 'fr')!
+ratelimiter.validation.language=Cette valeur doit être une langue disponible en traduction ('en' ou 'fr') !
 
 ratelimiter.exhausted.title=Vous consultez ce site trop vite !
 ratelimiter.exhausted.intro=Ce site est soumis à une limitation de débit.
@@ -97,7 +97,7 @@ ratelimiter.config.mailnotification=Mail notification configuration
 RateLimiter.RateLimiterServiceConfigClass_mail_from=Adresse de l'expéditeur
 RateLimiter.RateLimiterServiceConfigClass_mail_from.hint=Adresse courriel à partir de laquelle la notification apparaîtra avoir été envoyée.
 RateLimiter.RateLimiterServiceConfigClass_mail_to=Adresse du destinataire
-RateLimiter.RateLimiterServiceConfigClass_mail_to.hint=Adresse courriel à laquelle sont envoyée les notifications de tentative d'abus.
+RateLimiter.RateLimiterServiceConfigClass_mail_to.hint=Adresse courriel à laquelle sont envoyées les notifications de tentative d'abus.
 RateLimiter.RateLimiterServiceConfigClass_mail_interval=Interval minimum
 RateLimiter.RateLimiterServiceConfigClass_mail_interval.hint=Les notifications répétées pour des tentatives d'abus similaires se produisant pendant l'intervalle spécifié seront enregistrées, mais aucun courriel ne sera envoyé. Par défaut, l'intervalle est de 2 heures.
 RateLimiter.RateLimiterServiceConfigClass_interval_unit_DAYS=jour(s)

@@ -88,4 +88,10 @@ class DefaultRateLimiterService implements RateLimiterService
         }
         return limiter;
     }
+
+    @Override
+    public void clearCache()
+    {
+        cache.clear();
+    }
 }

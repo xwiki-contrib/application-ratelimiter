@@ -45,4 +45,9 @@ public interface RateLimiterService
      * @return a rate limiter, if no limiter is currently available {@link RateLimiter#NOLIMIT} is returned.
      */
     RateLimiter getRateLimiter(Object consumer, Object consumed);
+
+    /**
+     * Clear the cache of existing rate limiters.
+     */
+    void clearCache();
 }

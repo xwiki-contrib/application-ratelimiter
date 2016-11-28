@@ -90,4 +90,10 @@ public class DefaultRateLimiterCache implements RateLimiterCache, Initializable
     {
         cache.set(getKey(consumer, consumed), limiter);
     }
+
+    @Override
+    public void clear()
+    {
+        cache.removeAll();
+    }
 }
