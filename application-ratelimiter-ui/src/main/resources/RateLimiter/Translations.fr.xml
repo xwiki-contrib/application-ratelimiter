@@ -92,7 +92,7 @@ ratelimiter.exhausted.exceeded=Vous avez dépassé votre limite de débit.
 ratelimiter.exhausted.waiting=Avant d''accéder au site à nouveau, vous devez attendre {0}.
 ratelimiter.exhausted.waitinfo=Poursuivre la consultation avant ce délai peut augmenter votre temps d'attente.
 
-ratelimiter.config.mailnotification=Mail notification configuration
+ratelimiter.config.mailnotification=Configuration des alertes par courriel
 
 RateLimiter.RateLimiterServiceConfigClass_mail_from=Adresse de l'expéditeur
 RateLimiter.RateLimiterServiceConfigClass_mail_from.hint=Adresse courriel à partir de laquelle la notification apparaîtra avoir été envoyée.
