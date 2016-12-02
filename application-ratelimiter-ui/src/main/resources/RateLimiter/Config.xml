@@ -308,6 +308,110 @@
   </object>
   <object>
     <class>
+      <name>RateLimiter.RateLimiterServiceConfigClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <interval_unit>
+        <cache>0</cache>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>interval_unit</name>
+        <number>4</number>
+        <picker>0</picker>
+        <prettyName>Unit of mail minimum interval</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>DAYS|HOURS|MINUTES</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </interval_unit>
+      <language>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>language</name>
+        <number>5</number>
+        <picker>0</picker>
+        <prettyName>Language</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </language>
+      <mail_from>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>mail_from</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Mail sender</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp>/^(([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))?$/</validationRegExp>
+        <classType>com.xpn.xwiki.objects.classes.EmailClass</classType>
+      </mail_from>
+      <mail_interval>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>mail_interval</name>
+        <number>3</number>
+        <numberType>long</numberType>
+        <prettyName>Mail minimum interval</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </mail_interval>
+      <mail_to>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>mail_to</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>Mail recipient</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp>/^(([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))?$/</validationRegExp>
+        <classType>com.xpn.xwiki.objects.classes.EmailClass</classType>
+      </mail_to>
+    </class>
+    <name>RateLimiter.Config</name>
+    <number>0</number>
+    <className>RateLimiter.RateLimiterServiceConfigClass</className>
+    <guid>b1c62604-e81a-476d-a533-3d590cc3969b</guid>
+    <property>
+      <interval_unit>DAYS</interval_unit>
+    </property>
+    <property>
+      <language/>
+    </property>
+    <property>
+      <mail_from/>
+    </property>
+    <property>
+      <mail_interval/>
+    </property>
+    <property>
+      <mail_to/>
+    </property>
+  </object>
+  <object>
+    <class>
       <name>XWiki.XWikiRights</name>
       <customClass/>
       <customMapping/>
