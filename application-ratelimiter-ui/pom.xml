@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.xwiki.contrib.ratelimiter</groupId>
     <artifactId>application-ratelimiter</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <artifactId>application-ratelimiter-ui</artifactId>
   <name>Rate Limiter Application - UI</name>
